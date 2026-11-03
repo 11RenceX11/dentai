@@ -1,108 +1,59 @@
-# DentAI — Laravel 13 · Blade · Tailwind · SQLite
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Patients book online and describe the problem. Dentists and assistants arrange the schedule, and a
-rule-based assistant proposes prioritised actions that a dentist/assistant approves before they are
-added to the appointment.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## 1. Install
+## About Laravel
+
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
+
+## Learning Laravel
+
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+
+In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+
+## Agentic Development
+
+Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
 ```bash
-laravel new dentai            # choose: No starter kit · SQLite · (Pest or PHPUnit, either works)
-cd dentai
+composer require laravel/boost --dev
 
-# Laravel's default users migration is replaced (adds role + dentist/staff links)
-rm database/migrations/0001_01_01_000000_create_users_table.php
-
-# copy this overlay's files on top of the fresh app (from the folder holding dentai-overlay.zip)
-unzip -o ../dentai-overlay.zip -d .
-
-npm install && npm run build
-php artisan migrate:fresh --seed
-php artisan storage:link
-composer run dev              # http://localhost:8000
-php artisan test              # optional
+php artisan boost:install
 ```
 
-Demo logins (password `password`): `admin@dentai.test`, `dentist@dentai.test`, `assistant@dentai.test`.
+Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
-## 2. Artisan commands (the equivalent of every file in this overlay)
+## Contributing
 
-The overlay already contains the finished files. These are the commands that generate the same stubs.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-```bash
-# Models + migrations
-php artisan make:model Staff -m
-php artisan make:model Dentist -m
-php artisan make:model Patient -m
-php artisan make:model PatientMedicalHistory -m
-php artisan make:model Treatment -m
-php artisan make:model ProblemType -m
-php artisan make:migration create_dentist_treatment_table
-php artisan make:model Appointment -m
-php artisan make:model AppointmentTreatment -m
-php artisan make:model AppointmentSuggestion -m
-php artisan make:model Prescription -m
-php artisan make:model XrayImage -m
-php artisan make:model Billing -m
-php artisan make:model Payment -m
+## Code of Conduct
 
-# Controllers
-php artisan make:controller BookingController
-php artisan make:controller AuthController
-php artisan make:controller DashboardController --invokable
-php artisan make:controller AppointmentController
-php artisan make:controller SuggestionController
-php artisan make:controller PatientController
-php artisan make:controller PrescriptionController
-php artisan make:controller TreatmentController
-php artisan make:controller BillingController
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-# Requests, middleware, service, seeder, test
-php artisan make:request StoreBookingRequest
-php artisan make:request ScheduleAppointmentRequest
-php artisan make:middleware EnsureRole
-php artisan make:class Services/TriageService
-php artisan make:seeder DatabaseSeeder
-php artisan make:test BookingTriageTest
+## Security Vulnerabilities
 
-# Run
-php artisan migrate:fresh --seed
-php artisan storage:link
-php artisan route:list
-```
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## 3. How it works
+## License
 
-| Who | What they can do |
-|---|---|
-| Patient (no login) | `/book` — name, phone, gender (required), problem-type drop-down, problem name, how it feels, pain 0–10 |
-| Assistant | Dashboard queue, arrange schedule, approve/dismiss suggestions, patients, billing |
-| Dentist | Same clinical access + treatment notes and prescriptions (no billing) |
-| Admin | Everything + treatment catalogue |
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-**Assistant suggestions** (`app/Services/TriageService.php`): on every booking it scores the problem
-type baseline + pain level + warning words ("swelling", "throbbing", "fever", …) → `low / normal / high /
-emergency`, then creates *pending* suggestions (add a treatment, add an X-ray, call the patient today,
-check allergies first, book by a target date). Approving one writes it into the appointment.
-It is rule-based, not an LLM; you can swap `generate()` for Laravel's AI SDK later.
-
-## 4. Changes to your data structure
-
-- **Removed the stray `Information` table and the odd `Payments.payment_id ?<? payment_method` ref.**
-  Name, phone and gender now live on `patients` (your booking flow needs them); `staff` also gets names.
-- **`appointments`** gained `dentist_id`, `problem_type_id`, `problem_title`, `description`, `pain_level`,
-  `urgency`, `preferred_date`, and a `requested` status (a patient request has no time yet, so
-  start/end are nullable `time` columns).
-- **New tables:** `problem_types` (the drop-down) and `appointment_suggestions` (the approval queue).
-- `appointment_treatments.performed_by` is nullable (a dentist isn't assigned when a suggestion is approved).
-- `users` log in with **email** (Laravel's default) instead of `username`; `linked_dentist_id/linked_staff_id`
-  became `dentist_id/staff_id`. `payments.bill_id` → `billing_id` to follow Eloquent naming.
-- Table/column names follow Laravel conventions (plural snake_case, `created_at/updated_at`).
-- The users migration replaces Laravel's default so it can reference `dentists`/`staff`; SQLite allows that
-  ordering. On MySQL/Postgres, move those two foreign keys into a later migration.
-
-## 5. Design note
-
-The landing page follows the structure and copy of dentai.ai (dark theme, hero, bento cards, 4 steps, FAQ, CTA).
-Colors, fonts and the logo are approximations (placeholder wordmark in `resources/views/components/logo.blade.php`);
-Pricing and FAQ answers are placeholders. Replace them before going public.
