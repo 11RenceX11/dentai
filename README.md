@@ -1,59 +1,67 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DentAI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**A smart dental clinic scheduling and triage platform.**
 
-## About Laravel
+Patients book online and describe their problem. Dentists and assistants arrange the schedule, and a built-in assistant proposes prioritised next steps that a human approves before anything is added to the appointment.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About the Project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Dental clinics juggle a constant flow of appointment requests, from routine check-ups to painful emergencies. Front-desk staff often have to read every request, judge how urgent it is, and decide what the patient might need, all before a single slot is booked.
 
-## Learning Laravel
+DentAI makes that first step faster and more consistent. Patients describe what is wrong in their own words, and the system helps the clinic quickly see **who needs attention first** and **what should happen next**, while keeping dentists and assistants firmly in control of every decision.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## The Problem It Solves
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Unclear urgency.** A booking request rarely says how serious the situation is. Staff have to guess or call back.
+- **Slow, manual intake.** Collecting symptoms, pain levels and background by phone takes time away from patient care.
+- **Inconsistent follow-up.** Whether a patient gets an X-ray, an allergy check or a same-day call can depend on who handled the request.
+- **Scattered records.** Appointments, treatments, prescriptions, X-rays and billing are often spread across different tools.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Who It's For
 
-## Agentic Development
+| User | Their experience |
+|------|------------------|
+| **Patients** | Book without creating an account. Share their name, contact details, the type of problem, how it feels, and a pain rating from 0 to 10. |
+| **Assistants** | Work from a prioritised queue, arrange schedules, review and approve suggestions, manage patient records and handle billing. |
+| **Dentists** | Get the same clinical view, plus tools for treatment notes and prescriptions. Billing is kept separate. |
+| **Admins** | Full oversight, including management of the clinic's treatment catalogue. |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Key Ideas
 
-```bash
-composer require laravel/boost --dev
+### Patient-first booking
+A simple online request form that asks the right questions, so the clinic gets useful information from the very first contact.
 
-php artisan boost:install
-```
+### Assisted triage, with a human in the loop
+Each request is assessed for urgency (low, normal, high or emergency) using the type of problem, the reported pain level, and warning signs in the patient's description, such as swelling or fever. The assistant then proposes actions like adding a treatment, requesting an X-ray, calling the patient the same day, checking allergies first, or booking by a target date.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**Nothing happens automatically.** Every suggestion waits for a dentist or assistant to approve or dismiss it. The assistant supports clinical judgment; it never replaces it.
+
+### One place for the whole patient journey
+Appointments, treatment plans, prescriptions, X-ray images, billing and payments all live together, so staff see the full picture without switching tools.
+
+### Role-based access
+Each person sees what they need and nothing more. Patients book, assistants coordinate, dentists treat, and admins manage.
+
+## Current Status
+
+DentAI is an early-stage project. The assistant is rule-based rather than powered by a language model, which keeps its behaviour predictable and easy to explain. It is designed so a more advanced AI layer can be introduced later.
+
+The landing page uses placeholder branding, pricing and FAQ content that should be replaced before any public launch.
+
+## Vision
+
+To give small and mid-sized dental practices a calm, organised front desk: fewer missed emergencies, less repetitive admin, and more time spent on patients.
+
+## Built With
+
+Laravel, Blade, Tailwind CSS and SQLite.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Ideas, feedback and improvements are welcome. Please open an issue to start a conversation.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
+To be decided by the project owner.
